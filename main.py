@@ -1,4 +1,6 @@
 import sys
+from FSA import FSA
+from GUI import Window
 
 filename = (sys.argv)[1]
 
@@ -17,6 +19,11 @@ def tokenizeContent(content):
     return content
 
 
+
 tokens = loadFileContent(filename)
-fsa = tokenizeContent(tokens)
-print(fsa)
+fsaArray = tokenizeContent(tokens)
+fsa = FSA(fsaArray)
+#print(fsa.getAcceptStates())
+window = Window(fsa)
+window.showFSA()
+
