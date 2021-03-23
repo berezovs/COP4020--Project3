@@ -11,7 +11,10 @@ def loadFileContent(fname):
 
 
 def tokenizeContent(content):
-    return content.split(';')
+    content = content.split(';')
+    for element in content:
+        element = element.strip()
+    return content
 
 
 tokens = loadFileContent(filename)
