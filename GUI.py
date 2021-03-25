@@ -23,8 +23,11 @@ class Window:
 
 
     def drawTransitions(self):
+
         transitions = self.fsa.getTransitions()
+
         for which in range(0, len(transitions)):
+
             transition = transitions[which].split(':')
 
             if(int(transition[1])==(int(transition[0])+1)):
@@ -35,24 +38,20 @@ class Window:
                 self.canvas.create_line(150, 20+60+int(transition[1])*120, 150, 20+60+int(transition[1])*120+60, arrow = tk.FIRST)
                 self.canvas.create_text(160, 50+60+int(transition[1])*120, text = transition[2])
 
-            elif(int(transition[1])<(int(transition[0])-1)):
-                print(transition[0],":", transition[1])
-                self.canvas.create_line(100, 20+30+int(transition[1])*120, 100, 20+30+int(transition[0])*120)
-                self.canvas.create_line(100, 20+30+int(transition[1])*120, 120, 20+30+int(transition[1])*120, arrow=tk.LAST)
-                self.canvas.create_line(100, 20+30+int(transition[0])*120, 120, 20+30+int(transition[0])*120)
-                self.canvas.create_text(90, 50+60+int(transition[1])*120, text = transition[2])
-
-            elif(int(transition[1])>(int(transition[0])+1)):
-                self.canvas.create_line(100, 20+30+int(transition[1])*120, 100, 20+30+int(transition[0])*120)
-                self.canvas.create_line(100, 20+30+int(transition[1])*120, 120, 20+30+int(transition[1])*120, arrow = tk.LAST)
-                self.canvas.create_line(100, 20+30+int(transition[0])*120, 120, 20+30+int(transition[0])*120)
-                self.canvas.create_text(90, 50+60+int(transition[0])*120, text = transition[2])
-
-            elif(int(transition[1])==(int(transition[0]))):
+            elif(int(transition[1])==int(transition[0])):
                 self.drawCircle(160, 30+int(transition[1])*120, 200, 30+int(transition[1])*120+40)
                 self.canvas.create_line(170, 30+int(transition[1])*120, 171, 30+int(transition[1])*120, arrow = tk.FIRST)
                 self.canvas.create_text(210, 20+30+int(transition[0])*120, text = transition[2])
            
+            else:
+                self.canvas.create_line(100, 20+30+int(transition[1])*120, 100, 20+30+int(transition[0])*120)
+                self.canvas.create_line(100, 20+30+int(transition[1])*120, 120, 20+30+int(transition[1])*120, arrow=tk.LAST)
+                self.canvas.create_line(100, 20+30+int(transition[0])*120, 120, 20+30+int(transition[0])*120)
+                self.canvas.create_text(90, ((20+60+int(transition[1])*120)+(20+60+int(transition[0])*120))/2, text = transition[2])
+
+        
+
+            
 
        
 
