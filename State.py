@@ -21,6 +21,6 @@ class State:
 
     def getNextState(self, symbol):
         for transition in self.transitions:
-            if(transition[0]==symbol):
+            if(transition[0] == symbol):
                 return transition[1]
         return None

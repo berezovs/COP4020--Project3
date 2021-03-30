@@ -31,10 +31,14 @@ tokens = loadFileContent(automaton)
 fsaArray = tokenizeContent(tokens)
 string = loadFileContent(stringFile)
 fsa = DFA(fsaArray)
-
 isAccepted = fsa.isStringAccepted(string)
-printMessage(isAccepted)
 
-window = Window(fsa)
-window.showFSA()
+
+if(fsa.errorsExist()):
+    fsa.printErrors()
+else:
+    printMessage(isAccepted)
+    window = Window(fsa)
+    window.showFSA()
+    
 
