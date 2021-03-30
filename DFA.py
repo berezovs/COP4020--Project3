@@ -55,10 +55,6 @@ class DFA:
             print(error.getMessage())
 
     def isStringAccepted(self, string):
-        if(not self.validateString(string)):
-            self.errors.append(Error("Illegal string, character(s) not in alphabet"))
-            return
-
         charArr = list(string)
         currState = self.states[0]
 

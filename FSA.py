@@ -31,14 +31,18 @@ tokens = loadFileContent(automaton)
 fsaArray = tokenizeContent(tokens)
 string = loadFileContent(stringFile)
 fsa = DFA(fsaArray)
-isAccepted = fsa.isStringAccepted(string)
-
 
 if(fsa.errorsExist()):
     fsa.printErrors()
 else:
-    printMessage(isAccepted)
+    if(fsa.validateString(string)):
+        isAccepted = fsa.isStringAccepted(string)
+        printMessage(isAccepted)
+    else:
+        print("Illegal string: character(s) not in alphabet")
     window = Window(fsa)
     window.showFSA()
     
+
+
 
