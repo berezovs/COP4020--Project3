@@ -1,67 +1,40 @@
-from State import State
+import sys
+from DFA import DFA
+from GUI import Window
+
+automaton = (sys.argv)[1]
+stringFile = (sys.argv)[2]
 
 
-class FSA:
-    def __init__(self,fsa):
-        
-        self.numStates = int(fsa[0])
-        self.alphabet = fsa[1].split(',')
-        self.transitions = fsa[2].replace("(", "").replace(")", "").split(',')
-        self.acceptStates = fsa[3].split(',')
-        self.acceptStates = [int(i) for i in self.acceptStates]
-        self.states = [State(name) for name in range(0, int(self.numStates))]
-        self.setAcceptStates()
-        self.buildTransitions()
-        self.isStringAccepted("xxxxxyxxxyxxxzxxxa")
-
-    
-    def getNumStates(self):
-        return self.numStates
-    
-    def getAlphabet(self):
-        return self.alphabet
-
-    def getTransitions(self):
-        return self.transitions
-
-    def getAcceptStates(self):
-        return self.acceptStates
-
-    def setAcceptStates(self):
-        for state in self.states:
-            if(state.getStateName() in self.acceptStates):
-                state.designateAsAccept(True)
+def loadFileContent(fname):
+    with open(fname) as file:
+        content = file.read()
+    content = content.replace("\n", "")
+    return content
 
 
-    def buildTransitions(self):
-        
-        for which in range(0,len(self.transitions)):
-            transition = self.transitions[which].split(':')
-            stateNum = int(transition[0])
-            self.states[stateNum].addTransition(transition[2], self.states[ int(transition[1]) ] )
+def tokenizeContent(content):
+    content = content.split(';')
+    for element in content:
+        element = element.strip()
+    return content
+
+def printMessage(isAccepted):
+    if(isAccepted):
+        print(f"String '{string}' is accepted")
+    else:
+        print(f"String '{string}' is rejected")
 
 
-       
 
-    def isStringAccepted(self, string):
-        charArr = list(string)
-        currState = self.states[0]
+tokens = loadFileContent(automaton)
+fsaArray = tokenizeContent(tokens)
+string = loadFileContent(stringFile)
+fsa = DFA(fsaArray)
 
-        for ch in charArr:
-            currState = currState.getNextState(ch)
-            #print(currState.getStateName())
-            if currState is None:
-                print("String is rejected")
-                return
+isAccepted = fsa.isStringAccepted(string)
+printMessage(isAccepted)
 
-        if(currState.isAccepted()):
-            print("String is accepted")
-        else:
-            print("String is rejected")
+window = Window(fsa)
+window.showFSA()
 
-        
-
-        
-
-        
-    
