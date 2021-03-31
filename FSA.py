@@ -19,6 +19,7 @@ def tokenizeContent(content):
         element = element.strip()
     return content
 
+
 def printMessage(isAccepted):
     if(isAccepted):
         print(f"String '{string}' is accepted")
@@ -26,10 +27,11 @@ def printMessage(isAccepted):
         print(f"String '{string}' is rejected")
 
 
-
 tokens = loadFileContent(automaton)
 fsaArray = tokenizeContent(tokens)
 string = loadFileContent(stringFile)
+
+
 fsa = DFA(fsaArray)
 
 if(fsa.errorsExist()):
@@ -42,7 +44,3 @@ else:
         print("Illegal string: character(s) not in alphabet")
     window = Window(fsa)
     window.showFSA()
-    
-
-
-

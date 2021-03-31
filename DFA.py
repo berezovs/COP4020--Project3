@@ -3,8 +3,8 @@ from Error import Error
 
 
 class DFA:
-    def __init__(self,fsa):
-        
+    def __init__(self, fsa):
+
         self.numStates = int(fsa[0])
         self.alphabet = [e.strip() for e in fsa[1].split(',')]
         self.transitions = fsa[2].replace("(", "").replace(")", "").split(',')
@@ -15,10 +15,9 @@ class DFA:
         self.setAcceptStates()
         self.buildTransitions()
 
-    
     def getNumStates(self):
         return self.numStates
-    
+
     def getAlphabet(self):
         return self.alphabet
 
@@ -33,23 +32,22 @@ class DFA:
             if(state.getStateName() in self.acceptStates):
                 state.designateAsAccept(True)
 
-
     def buildTransitions(self):
-        for which in range(0,len(self.transitions)):
+        for which in range(0, len(self.transitions)):
             transition = self.transitions[which].split(':')
             stateNum = int(transition[0])
             if(self.validateTransition(transition)):
-                self.states[stateNum].addTransition(transition[2], self.states[ int(transition[1]) ] )
+                self.states[stateNum].addTransition(
+                    transition[2], self.states[int(transition[1])])
             else:
                 self.errors.append(Error("Transitions are not valid."))
-
 
     def validateTransition(self, transition):
         return transition[2] in self.alphabet
 
     def errorsExist(self):
-        return (len(self.errors)>0)
-    
+        return (len(self.errors) > 0)
+
     def printErrors(self):
         for error in self.errors:
             print(error.getMessage())
@@ -67,13 +65,9 @@ class DFA:
             return True
         else:
             return False
-        
+
     def validateString(self, string):
         for char in string:
             if not char in self.alphabet:
                 return False
         return True
-        
-
-        
-    
